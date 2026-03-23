@@ -246,6 +246,58 @@ The `infra/main.bicep` template provisions:
 
 ---
 
+## Authentication Setup
+
+The app supports three social login providers. All are configured in `staticwebapp.config.json` and use Azure Static Web Apps built-in auth.
+
+### Microsoft (Entra ID)
+
+1. Go to **Azure Portal** > **Microsoft Entra ID** > **App registrations** > **New registration**
+2. Set:
+   - **Name**: `BG Night Planner`
+   - **Supported account types**: *Accounts in any organizational directory and personal Microsoft accounts*
+   - **Redirect URI**: select **Single-page application (SPA)** and enter `http://localhost:5173` (add your production URL later)
+3. From the app's **Overview**, copy the **Application (client) ID**
+4. Go to **Certificates & secrets** > **New client secret**, copy the secret **Value**
+5. Go to **API permissions** > **Add a permission** > **Microsoft Graph** > **Delegated**: add `openid`, `profile`, `email`, `User.Read`, then **Grant admin consent**
+6. Set environment variables:
+   - `VITE_CLIENT_ID` and `AZURE_CLIENT_ID` = the Application (client) ID
+   - `AZURE_CLIENT_SECRET` = the client secret value
+   - `VITE_AUTHORITY` = `https://login.microsoftonline.com/common` (or replace `common` with your tenant ID to restrict access)
+
+### Google
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/) > **APIs & Services** > **Credentials** > **Create Credentials** > **OAuth client ID**
+2. Select **Web application**, name it `BG Night Planner`
+3. Under **Authorized redirect URIs**, add: `https://<your-swa>.azurestaticapps.net/.auth/login/google/callback`
+4. Copy the **Client ID** and **Client Secret**
+5. In **OAuth consent screen**, add scopes: `email`, `profile`, `openid`
+6. Set in Azure SWA Application settings:
+   - `GOOGLE_CLIENT_ID` = your Google OAuth client ID
+   - `GOOGLE_CLIENT_SECRET` = your Google OAuth client secret
+
+### Discord
+
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications) > **New Application**
+2. Name it `BG Night Planner`
+3. Go to **OAuth2**, copy the **Client ID** and reset/copy the **Client Secret**
+4. Under **Redirects**, add: `https://<your-swa>.azurestaticapps.net/.auth/login/discord/callback`
+5. Set in Azure SWA Application settings:
+   - `DISCORD_CLIENT_ID` = your Discord application client ID
+   - `DISCORD_CLIENT_SECRET` = your Discord client secret
+
+### Login URLs
+
+| Provider  | Login URL              | Callback URL                        |
+| --------- | ---------------------- | ----------------------------------- |
+| Microsoft | `/.auth/login/aad`     | `/.auth/login/aad/callback`         |
+| Google    | `/.auth/login/google`  | `/.auth/login/google/callback`      |
+| Discord   | `/.auth/login/discord` | `/.auth/login/discord/callback`     |
+
+Unauthenticated requests to `/api/*` are redirected to `/.auth/login/aad` by default (configured in `staticwebapp.config.json`).
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -253,6 +305,7 @@ The `infra/main.bicep` template provisions:
 - Node.js 18+
 - Azure CLI + Azure Developer CLI (`azd`)
 - An Azure subscription
+- At least one authentication provider configured (see [Authentication Setup](#authentication-setup))
 
 ### Local Development
 
