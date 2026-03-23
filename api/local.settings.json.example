@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "COSMOS_DB_CONNECTION_STRING": "your-cosmos-db-connection-string",
+    "COSMOS_DB_NAME": "gamenight-db",
+    "COMMUNICATION_SERVICES_CONNECTION_STRING": "your-communication-services-connection-string",
+    "BGG_API_BASE_URL": "https://www.boardgamegeek.com/xmlapi2"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "*",
+    "CORSCredentials": false
+  }
+}

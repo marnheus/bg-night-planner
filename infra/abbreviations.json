@@ -1,0 +1,12 @@
+{
+  "communicationCommunicationServices": "acs-",
+  "documentDBDatabaseAccounts": "cosmos-",
+  "insightsComponents": "appi-",
+  "keyVaultVaults": "kv-",
+  "operationalInsightsWorkspaces": "log-",
+  "resourcesResourceGroups": "rg-",
+  "storageStorageAccounts": "st",
+  "webServerFarms": "plan-",
+  "webSitesFunctions": "func-",
+  "webStaticSites": "stapp-"
+}

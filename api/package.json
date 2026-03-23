@@ -1,0 +1,27 @@
+{
+  "name": "bg-night-planner-api",
+  "version": "1.0.0",
+  "description": "Game Night Planner API - Azure Functions",
+  "scripts": {
+    "start": "func start",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/cosmos": "^4.0.0",
+    "@azure/communication-email": "^1.0.0",
+    "axios": "^1.6.2",
+    "xml2js": "^0.6.2",
+    "cron-parser": "^4.9.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/uuid": "^9.0.7",
+    "@types/xml2js": "^0.4.11",
+    "typescript": "^5.2.2"
+  }
+}
